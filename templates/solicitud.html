@@ -1,0 +1,41 @@
+{% include "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <form>
+        <fieldset>
+            <legend>Solicitud de proyecto</legend>
+            <div class="form-group row">
+                <label class="form-label mt-2" >Titulo</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="Titulo">
+                </div>
+            
+                <label class="form-label mt-2" >Departamento</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="Departamento">
+                </div>
+            
+                <label class="form-label mt-2" >Fecha limite</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" placeholder="">
+                </div>
+
+                <label class="form-label mt-2">Detalle</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                </div>
+                
+
+                <label class="form-label mt-2" >Etapas</label>
+                <div class="col-sm-10">
+                    <input type="text" placeholder="Numero de etapas" class="form-control">
+                </div>
+                
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3 mb-4">Aceptar</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}
