@@ -23,6 +23,7 @@ class Solicitud(models.Model):
     fecha_Fin = models.DateField(null=False)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
+    etapa = models.IntegerField()
 
     def __str__(self):
         return self.titulo

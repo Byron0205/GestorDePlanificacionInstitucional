@@ -2,34 +2,36 @@
 
 {% block content %}
 <div class="container mt-5">
-    <form>
+    <form method="post">
+        {% csrf_token %}
         <fieldset>
+            <input type="hidden" name="user" value="{{ request.user.id}}">
             <legend>Solicitud de proyecto</legend>
             <div class="form-group row">
-                <label class="form-label mt-2" >Titulo</label>
+                {{form.titulo.label_tag}}
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Titulo">
+                    {{form.titulo}}
                 </div>
             
-                <label class="form-label mt-2" >Departamento</label>
+                {{form.departamento.label_tag}}
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Departamento">
+                    {{form.departamento}}
                 </div>
             
-                <label class="form-label mt-2" >Fecha limite</label>
+                {{form.fechaLimite.label_tag}}
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" placeholder="">
+                    {{form.fechaLimite}}
                 </div>
 
-                <label class="form-label mt-2">Detalle</label>
+                {{form.detalle.label_tag}}
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    {{form.detalle}}
                 </div>
                 
 
-                <label class="form-label mt-2" >Etapas</label>
+                {{form.etapa.label_tag}}
                 <div class="col-sm-10">
-                    <input type="text" placeholder="Numero de etapas" class="form-control">
+                    {{form.etapa}}
                 </div>
                 
             </div>
