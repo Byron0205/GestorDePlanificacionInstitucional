@@ -11,5 +11,6 @@ urlpatterns = [
     path('Solicitud', views.FormSolicitud, name='solicitud'),
     path('login/', views.login_view, name='login'),
     path('salir', views.salir, name='salir'),
-    path('error_403', error_403, name='error_403')
+    path('error_403', error_403, name='error_403'),
+    path('listadoSolicitudes', views.listaSolicitudes, name='listaSolicitudes')
 ]

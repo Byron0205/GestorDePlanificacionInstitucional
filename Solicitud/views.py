@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 
+from django.contrib import messages
+
 from .forms import AgregarSolicitud
 from .models import Solicitud
 import pdb
@@ -32,13 +34,11 @@ def FormSolicitud(request):
         print(form.cleaned_data.get('fechaLimite'))
 
         miSolicitud.save()
+        messages.success(request, 'Solicitud agregada correctamente')
         return redirect('Home')
     return render(request, 'Solicitud.html', {'form': form})
 
-        
 
-def envioSolicitud(request):
-    pass
 
 def login_view(request):
     username = request.POST.get('username')
@@ -51,6 +51,7 @@ def login_view(request):
         usuario = authenticate(username=username, password=password)
         if usuario:
             login(request,usuario)
+            messages.success(request, f'Bienvenido {usuario.get_username()}')
             return redirect('Home')
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos')
@@ -62,6 +63,8 @@ def salir(request):
     return redirect('Home')
 
 def Home(request):
-    return render(request, 'home.html', {
-        'Jefe': 'Area'
-    })
+    return render(request, 'home.html')
+
+@login_required
+def listaSolicitudes(request):
+    return render(request, 'listado.html')

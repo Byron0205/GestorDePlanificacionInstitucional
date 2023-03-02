@@ -1,10 +1,10 @@
 {% include "base.html" %}
     {% block content %}
     <div class="container">
-        <h1 class="mt-5">Bienvenido al Sistema de Planificacion Institucional {{Jefe}}</h1>
+        <h1 class="mt-5">Bienvenido al Sistema de Planificacion Institucional</h1>
         <div class="botones_inicio">
             <a class="btn btn-success" href="{% url 'solicitud' %}">Solicitar Proyecto</a>
-        <a class="btn btn-success" href="#">Ver Listado</a>
+        <a class="btn btn-success" href="{% url 'listaSolicitudes' %}">Ver Listado</a>
         </div>
         
     </div>
