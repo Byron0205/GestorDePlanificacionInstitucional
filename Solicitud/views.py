@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 
 from django.contrib import messages
 
-from .forms import AgregarSolicitud
+from .forms import AgregarSolicitud #revisarSolicitud
 from .models import Solicitud
 import pdb
 
@@ -18,6 +18,7 @@ def error_403(request, exception):
 @permission_required('Solicitud.add_solicitud', login_url='login/', raise_exception=True)
 @login_required
 def FormSolicitud(request):
+    #validar si el usuario tiene el permiso
     if not request.user.has_perm('Solicitud.add_solicitud'):
         raise PermissionDenied('No tiene permiso para realizar la accion')
     form = AgregarSolicitud(request.POST or None)
@@ -68,3 +69,14 @@ def Home(request):
 @login_required
 def listaSolicitudes(request):
     return render(request, 'listado.html')
+
+#revisar obtener solicitud detallada
+def revisarSolicitud(request):
+    
+    return render(request,'actualizarSolicitud.html')
+
+def listaSolicitudes(request):
+    solicitudes = Solicitud.objects.all()
+    return render(request, "listado.html", {
+        'solicitudes': solicitudes
+    })

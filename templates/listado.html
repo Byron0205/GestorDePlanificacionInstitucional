@@ -1,5 +1,27 @@
-{% include "base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-    <p>Pagina de listado</p>
+    <h1>Solicitudes</h1>
+    <table border="1" style="text-align:  center;">
+        <tr>
+            <td>Titulo</td>
+            <td>Fecha inicio</td>
+            <td>Fecha fin</td>
+            <td>Usuario</td>
+            <td>Departamento</td>
+            <td>Etapas</td>
+        </tr>
+        {% for s in solicitudes  %}
+            <tr>
+                <td>{{s.titulo}}</td>
+                <td>{{s.fecha_Inicio}}</td>
+                <td>{{s.fecha_Fin}}</td>
+                <td>{{s.usuario}}</td>
+                <td>{{s.departamento}}</td>
+                <td>{{s.etapa}}</td>
+                <td><button>Ver mas </button></td>
+            </tr>
+        {% endfor %}
+    </table>
+
 {% endblock content %}
