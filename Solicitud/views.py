@@ -9,14 +9,14 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib import messages
 
 from .forms import AgregarSolicitud #revisarSolicitud
-from .models import Solicitud
+from .models import Solicitud, Departamento, estado
 import pdb
 
 def error_403(request, exception):
     return render(request, '403.html', {'message': 'No tienes permisos para acceder a esta página.'})
 
-@permission_required('Solicitud.add_solicitud', login_url='login/', raise_exception=True)
 @login_required
+@permission_required('Solicitud.add_solicitud', login_url='login/', raise_exception=True)
 def FormSolicitud(request):
     #validar si el usuario tiene el permiso
     if not request.user.has_perm('Solicitud.add_solicitud'):
@@ -71,9 +71,42 @@ def listaSolicitudes(request):
     return render(request, 'listado.html')
 
 #revisar obtener solicitud detallada
-def revisarSolicitud(request):
+def editarSolicitud(request, codigo):
+    solicitud = Solicitud.objects.get(id=codigo)
+    Departamentos = Departamento.objects.all()
+    print(solicitud.fecha_Inicio)
+    print(solicitud.fecha_Fin)
+    return render(request,'actualizarSolicitud.html',{
+        's': solicitud,
+        'dptos': Departamentos
+    })
+
+def modificarSolicitud(request):
+    id = request.POST['id']
+    titulo = request.POST['titulo']
+    departamento = get_object_or_404(Departamento, pk=request.POST['departamento'])
+    fechaI= request.POST['fechainicio']
+    fechaF= request.POST['fechafin']
+    completadas = request.POST['completadas']
+    detalle = request.POST['detalle']
+
+    solicitud = get_object_or_404(Solicitud, pk=id)
+    solicitud.titulo = titulo
+    solicitud.departamento =departamento
+    solicitud.fecha_Inicio = fechaI
+    solicitud.fecha_Fin= fechaF
+    solicitud.detalle= detalle
+    solicitud.completadas = completadas
+    if int(completadas) > 0 and int(completadas) < int(request.POST['etapa']):
+        estadoSolicitud = get_object_or_404(estado, pk=2)
+        solicitud.estado = estadoSolicitud
+    elif int(completadas) == int(request.POST['etapa']) :
+        estadoSolicitud = get_object_or_404(estado, pk=3)
+        solicitud.estado = estadoSolicitud
+    solicitud.save()
+
+    return redirect('Home')
     
-    return render(request,'actualizarSolicitud.html')
 
 def listaSolicitudes(request):
     solicitudes = Solicitud.objects.all()

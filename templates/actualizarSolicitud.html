@@ -1,18 +1,78 @@
-{% load static %}
+{% extends "base.html" %}
 
-{% include "solicitud.html" %}
+{% block content %}
+    <div class="container mt-5">
+        <form action="/modificarSolicitud/" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <input type="hidden" name="id" value="{{s.id}}">
+                <input type="hidden" name="etapa" value="{{s.etapa}}">
+                <legend>Solicitud de proyecto</legend>
+                
+                <div class="form-group row">
+                    <label for="user">Usuario</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" readonly type="text" name="user" value="{{s.usuario}}">
+                    </div>
+                    
 
+                    <label for="titulo">Titulo</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="titulo" value="{{s.titulo}}">
+                    </div>
+                
+                    <label for="fechainicio">Fecha inicio</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="date" name="fechainicio" value="{{s.fecha_Inicio|date:'Y-m-d'}}">
+                    </div>
+                    
+                    <label for="fechafin">Fecha fin</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="date" name="fechafin" value="{{s.fecha_Fin|date:'Y-m-d'}}">
+                    </div>
+                
+                    <label for="departamento">Departamento</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" name="departamento">
+                            {% for dpto in dptos %}
+                                <option value="{{dpto.idDepartamento}}" >{{dpto.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <label class="form-label mt-4" for="rango" >Etapas <span id="valor">{{s.completadas}}/{{s.etapa}}</span></label>
+                    <div class="col-sm-10">
+                        <input class="form-range" type="range" id="completadas" name="completadas" class="form-range" min="0" max="{{s.etapa}}" step="1" id="customRange3" onchange="mostrarValor()" value="{{s.completadas}}">
+                    </div>
 
-<label class="form-label mt-4" >Etapas <span id="valor">0</span></label>
-                <div class="col-sm-10">
-                    <input type="range" id="rango" class="form-range" min="0" max="5" step="1" id="customRange3" onchange="mostrarValor()" value="0">
+                    <label for="detalle">Detalle</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control" wrap="soft" name="detalle">{{s.detalle}}</textarea>
+                    </div>
+                    
+                    <label for="estado">Estado</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" readonly type="text" name="estado" value="{{s.estado}}">
+                    </div>
+                    
                 </div>
+    
+                
+                <button type="submit" class="btn btn-primary mt-3 mb-4">Aceptar</button>
+            </fieldset>
+                
+        </form>
+    </div>
+    
+        
 
 
-<script>
-    function mostrarValor() {
-        var rango = document.getElementById("rango");
-        var valor = document.getElementById("valor");
-        valor.innerHTML =rango.value;
-    }
-</script>
+    <script>
+        function mostrarValor() {
+            var rango = document.getElementById("completadas");
+            var estado = document.getElementById('estado')
+            var valor = document.getElementById("valor");
+            valor.innerHTML =rango.value+'/{{s.etapa}}';
+        }
+    </script>
+{% endblock content %}

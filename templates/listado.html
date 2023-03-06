@@ -10,6 +10,7 @@
             <td>Usuario</td>
             <td>Departamento</td>
             <td>Etapas</td>
+            <td>Estado</td>
         </tr>
         {% for s in solicitudes  %}
             <tr>
@@ -18,8 +19,25 @@
                 <td>{{s.fecha_Fin}}</td>
                 <td>{{s.usuario}}</td>
                 <td>{{s.departamento}}</td>
-                <td>{{s.etapa}}</td>
-                <td><button>Ver mas </button></td>
+                <td> {{s.completadas}}/{{s.etapa}}</td>
+                <td>
+                    {% if s.estado == 1 %}
+                        <svg viewBox = "0 0 100 100">
+                            <circle cx="50" cy="50" r="30" fill="#FE0001" />
+                        </svg>
+                    {% endif %}
+                    {% if s.estado == 2 %}
+                    <svg viewBox = "0 0 100 100">
+                        <circle cx="50" cy="50" r="30" fill="#FFFF00" />
+                    </svg>
+                    {% endif %}
+                    {% if s.estado == 3 %}
+                    <svg viewBox = "0 0 100 100">
+                        <circle cx="50" cy="50" r="30" fill="#59FA59" />
+                    </svg>
+                    {% endif %}
+                </td>
+                <td><button><a href="editarSolicitud/{{s.id}}">Ver mas</a></button></td>
             </tr>
         {% endfor %}
     </table>
