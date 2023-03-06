@@ -71,17 +71,22 @@ def listaSolicitudes(request):
     return render(request, 'listado.html')
 
 #revisar obtener solicitud detallada
+
 def editarSolicitud(request, codigo):
+    if not request.user.has_perm('Solicitud.change_solicitud'):
+        messages.error(request, 'No tiene permiso de modificar solicitudes')
     solicitud = Solicitud.objects.get(id=codigo)
     Departamentos = Departamento.objects.all()
-    print(solicitud.fecha_Inicio)
-    print(solicitud.fecha_Fin)
     return render(request,'actualizarSolicitud.html',{
         's': solicitud,
         'dptos': Departamentos
     })
 
+@permission_required('Solicitud.change_solicitud', login_url='login/')
 def modificarSolicitud(request):
+    if not request.user.has_perm('Solicitud.change_solicitud'):
+        messages.error(request, 'No tiene permiso de modificar solicitudes')
+        return redirect('Home')
     id = request.POST['id']
     titulo = request.POST['titulo']
     departamento = get_object_or_404(Departamento, pk=request.POST['departamento'])
@@ -105,11 +110,11 @@ def modificarSolicitud(request):
         solicitud.estado = estadoSolicitud
     solicitud.save()
 
-    return redirect('Home')
+    return redirect('listaSolicitudes')
     
 
 def listaSolicitudes(request):
     solicitudes = Solicitud.objects.all()
     return render(request, "listado.html", {
-        'solicitudes': solicitudes
+        'solicitudes': solicitudes,
     })

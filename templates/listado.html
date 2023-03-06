@@ -1,45 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Solicitudes</h1>
-    <table border="1" style="text-align:  center;">
-        <tr>
-            <td>Titulo</td>
-            <td>Fecha inicio</td>
-            <td>Fecha fin</td>
-            <td>Usuario</td>
-            <td>Departamento</td>
-            <td>Etapas</td>
-            <td>Estado</td>
-        </tr>
-        {% for s in solicitudes  %}
+    <h1 class="mt-4">Solicitudes</h1>
+    <div class="table-responsive py-2">
+        <table border="1" class="table table-striped">
+            <thead>
             <tr>
-                <td>{{s.titulo}}</td>
-                <td>{{s.fecha_Inicio}}</td>
-                <td>{{s.fecha_Fin}}</td>
-                <td>{{s.usuario}}</td>
-                <td>{{s.departamento}}</td>
-                <td> {{s.completadas}}/{{s.etapa}}</td>
-                <td>
-                    {% if s.estado == 1 %}
-                        <svg viewBox = "0 0 100 100">
-                            <circle cx="50" cy="50" r="30" fill="#FE0001" />
-                        </svg>
-                    {% endif %}
-                    {% if s.estado == 2 %}
-                    <svg viewBox = "0 0 100 100">
-                        <circle cx="50" cy="50" r="30" fill="#FFFF00" />
-                    </svg>
-                    {% endif %}
-                    {% if s.estado == 3 %}
-                    <svg viewBox = "0 0 100 100">
-                        <circle cx="50" cy="50" r="30" fill="#59FA59" />
-                    </svg>
-                    {% endif %}
-                </td>
-                <td><button><a href="editarSolicitud/{{s.id}}">Ver mas</a></button></td>
+                <td>Titulo</td>
+                <td>Fecha inicio</td>
+                <td>Fecha fin</td>
+                <td>Usuario</td>
+                <td>Departamento</td>
+                <td>Etapas</td>
+                <td>Estado</td>
+                <td>Opciones</td>
             </tr>
-        {% endfor %}
-    </table>
+        </thead>
+            {% for s in solicitudes  %}
+                <tbody>
+                    <tr>
+                    <td>{{s.titulo}}</td>
+                    <td>{{s.fecha_Inicio}}</td>
+                    <td>{{s.fecha_Fin}}</td>
+                    <td>{{s.usuario}}</td>
+                    <td>{{s.departamento}}</td>
+                    <td> {{s.completadas}}/{{s.etapa}}</td>
+                    <td>
+                        {% if s.completadas == 0 %}
+                            <svg viewBox = "0 0 100 100">
+                                <circle cx="50" cy="50" r="30" fill="#FE0001" />
+                            </svg>
+                        {% endif %}
+                        {% if s.completadas > 0 and s.completadas < s.etapa %}
+                        <svg viewBox = "0 0 100 100">
+                            <circle cx="50" cy="50" r="30" fill="#FFFF00" />
+                        </svg>
+                        {% endif %}
+                        {% if s.completadas == s.etapa %}
+                        <svg viewBox = "0 0 100 100">
+                            <circle cx="50" cy="50" r="30" fill="#59FA59" />
+                        </svg>
+                        {% endif %}
+                    </td>
+                    <td><button><a href="editarSolicitud/{{s.id}}" class="btn">Ver mas</a></button></td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    
 
 {% endblock content %}
