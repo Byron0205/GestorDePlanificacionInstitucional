@@ -67,6 +67,7 @@ def Home(request):
     return render(request, 'home.html')
 
 @login_required
+@permission_required('Solicitud.view_solicitud', login_url='login/')
 def listaSolicitudes(request):
     return render(request, 'listado.html')
 
@@ -118,3 +119,9 @@ def listaSolicitudes(request):
     return render(request, "listado.html", {
         'solicitudes': solicitudes,
     })
+
+
+def eliminarSolicitud(request, codigo):
+    solicitud = Solicitud.objects.get(id=codigo)
+    solicitud.delete()
+    return redirect('listaSolicitudes')

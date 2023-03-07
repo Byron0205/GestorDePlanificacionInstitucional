@@ -14,5 +14,6 @@ urlpatterns = [
     path('error_403', error_403, name='error_403'),
     path('listadoSolicitudes', views.listaSolicitudes, name='listaSolicitudes'),
     path('editarSolicitud/<codigo>', views.editarSolicitud, name='editarSolicitud'),
-    path('modificarSolicitud/', views.modificarSolicitud, name='modificarSolicitud')
+    path('modificarSolicitud/', views.modificarSolicitud, name='modificarSolicitud'),
+    path('eliminarSolicitud/<codigo>/', views.eliminarSolicitud, name='eliminarSolicitud')
 ]
