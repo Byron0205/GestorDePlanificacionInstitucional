@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <form method="post" action="/guardarEtapas/">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Etapas</legend>
+            <input type="hidden" name="idSolicitud" value="{{solicitud.id}}">
+            <div class="form-group row">
+            {% for e in etapas %}
+                    <label class="form-label">Etapa {{e}}</label>
+                    <div class="col-sm-10">
+                        <textarea required class="form-control" name="detalle{{e}}" id="" cols="10" rows="5"></textarea>
+                    </div>
+            {% endfor %}
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-primary mt-3 mb-4">Aceptar</button>
+    </form>
+{% endblock content %}

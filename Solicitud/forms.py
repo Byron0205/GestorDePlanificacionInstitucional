@@ -1,5 +1,6 @@
 from django import forms
 from .models import Departamento
+from django.utils.timezone import now
 
 class AgregarSolicitud(forms.Form):
     titulo = forms.CharField(required=True, min_length=4, max_length=30,widget=forms.TextInput(attrs={
@@ -12,6 +13,11 @@ class AgregarSolicitud(forms.Form):
         'id': 'dpto',
         'placeholder': 'Departamento'
     }))
+    fechaInicio = forms.DateField(required=True,label='Fecha Inicio', widget=forms.DateInput(format='%d/%m/%Y',attrs={
+        'type': 'date',
+        'class': 'form-control',
+        "id": 'fecha-Incicio'
+        }))
     fechaLimite = forms.DateField(required=True,label='Fecha Limite', widget=forms.DateInput(format='%d/%m/%Y',attrs={
         'type': 'date',
         'class': 'form-control',
